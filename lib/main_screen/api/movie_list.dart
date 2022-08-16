@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter_about_movie_app/main_screen/model/model.dart';
+import 'package:flutter_about_movie_app/component/model.dart';
 import 'package:http/http.dart' as http;
 
 import '../../api_keys/api_keys.dart';

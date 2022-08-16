@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import '../../api_keys/api_keys.dart';
 import '../model/detail_movie.dart';
 
-class MovieApi {
+class DetailApi {
   Future<DetailMovie> getMovieDetail(String query) async {
     Uri url = Uri.parse(
         'https://api.themoviedb.org/3/movie/$query?api_key=$ssam_api_keys');

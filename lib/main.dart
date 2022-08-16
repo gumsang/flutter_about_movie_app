@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'detail_screen/view_model/detail_view_model.dart';
 import 'main_screen/screens/main_screen.dart';
 import 'main_screen/view_model/movie_view_model.dart';
 
@@ -12,14 +13,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: ChangeNotifierProvider(
-        create: (_) => MovieViewModel(),
-        child: const MainScreen(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => MovieViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DetailViewModel(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MainScreen(),
       ),
     );
   }

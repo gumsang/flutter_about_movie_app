@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_about_movie_app/detail_screen/screens/detail_screen.dart';
 import 'package:flutter_about_movie_app/main_screen/view_model/movie_view_model.dart';
 import 'package:provider/provider.dart';
+
+import '../../detail_screen/view_model/detail_view_model.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -8,6 +11,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<MovieViewModel>();
+    final detailViewModel = context.watch<DetailViewModel>();
     final orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       appBar: AppBar(
@@ -27,7 +31,13 @@ class MainScreen extends StatelessWidget {
                   itemBuilder: (BuildContext ctx, index) {
                     return GestureDetector(
                       onTap: () {
-                        // Navigator.push(context, MaterialPageRoute(builder: (context) => ,))
+                        detailViewModel.getDetail(
+                            viewModel.movieList[index].id.toString());
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DetailScreen(),
+                            ));
                       },
                       child: Column(
                         children: [

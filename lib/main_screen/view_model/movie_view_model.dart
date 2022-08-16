@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../api/weather_api.dart';
-import '../model/model.dart';
+import '../api/movie_list.dart';
+import '../../component/model.dart';
 
 class MovieViewModel extends ChangeNotifier {
   MovieViewModel() {
@@ -9,6 +9,7 @@ class MovieViewModel extends ChangeNotifier {
   }
   final _movieApi = MovieApi();
   List<AboutMovie> movieList = [];
+  AboutMovie movie = AboutMovie();
 
   Future getList() async {
     movieList = await _movieApi.getMovieList();
