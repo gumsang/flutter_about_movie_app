@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_about_movie_app/search_screen/screens/search_screen.dart';
 import 'package:provider/provider.dart';
 import '../../detail_screen/screens/detail_screen.dart';
 import '../../detail_screen/view_model/detail_view_model.dart';
 import '../../search_screen/view_model/search_movie_view_model.dart';
-import '../view_model/movie_view_model.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+class SearchScreen extends StatefulWidget {
+  const SearchScreen({Key? key}) : super(key: key);
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _SearchScreenState extends State<SearchScreen> {
   bool _searchBoolean = false;
   final _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<MovieViewModel>();
     final searchviewModel = context.watch<SearchViewModel>();
     final detailViewModel = context.watch<DetailViewModel>();
     return Scaffold(
@@ -44,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
                     })
               ],
         title: !_searchBoolean
-            ? const Text("영화 리스트")
+            ? const Text("검색 결과")
             : TextField(
                 controller: _controller,
                 autofocus: true,
@@ -54,18 +51,10 @@ class _MainScreenState extends State<MainScreen> {
                     onTap: () {
                       if (_controller.text.isNotEmpty) {
                         searchviewModel.getSearchResult(_controller.text);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SearchScreen(),
-                            ));
                         _controller.clear();
-                      } else {}
+                      }
                     },
-                    child: const Icon(
-                      Icons.search,
-                      color: Colors.white,
-                    ),
+                    child: const Icon(Icons.search),
                   ),
                   //Style of TextField
                   enabledBorder: const UnderlineInputBorder(
@@ -75,7 +64,7 @@ class _MainScreenState extends State<MainScreen> {
                       //Borders when a TextField is in focus
                       borderSide: BorderSide(color: Colors.white)),
                   hintText:
-                      '제목을 입력하세요', //Text that is displayed when nothing is entered.
+                      'Search', //Text that is displayed when nothing is entered.
                   hintStyle: const TextStyle(
                     //Style of hintText
                     color: Colors.white60,
@@ -85,21 +74,21 @@ class _MainScreenState extends State<MainScreen> {
               ),
       ),
       body: Center(
-        child: viewModel.movieList.isEmpty
+        child: searchviewModel.movieList.isEmpty
             ? const CircularProgressIndicator()
             : Expanded(
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 200,
-                      childAspectRatio: 2 / 3.3,
+                      childAspectRatio: 2 / 4,
                       crossAxisSpacing: 20,
                       mainAxisSpacing: 20),
-                  itemCount: viewModel.movieList.length,
+                  itemCount: searchviewModel.movieList.length,
                   itemBuilder: (BuildContext ctx, index) {
                     return GestureDetector(
                       onTap: () {
                         detailViewModel.getDetail(
-                            viewModel.movieList[index].id.toString());
+                            searchviewModel.movieList[index].id.toString());
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -111,12 +100,13 @@ class _MainScreenState extends State<MainScreen> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: Image.network(
-                              viewModel
-                                  .getPosterUrl(viewModel.movieList[index]),
+                              searchviewModel.getPosterUrl(
+                                  searchviewModel.movieList[index]),
                               fit: BoxFit.cover,
                             ),
                           ),
-                          Text(viewModel.movieList[index].title as String),
+                          Text(
+                              searchviewModel.movieList[index].title as String),
                         ],
                       ),
                     );
