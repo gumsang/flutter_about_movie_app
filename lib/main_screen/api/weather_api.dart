@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 
 import '../../api_keys/api_keys.dart';
 
-class WeatherApi {
-  Future<Movie> getMovieList() async {
+class MovieApi {
+  Future<List<AboutMovie>> getMovieList() async {
     Uri url = Uri.parse(
         'https://api.themoviedb.org/3/movie/upcoming?api_key=$ssam_api_keys&language=ko-KR&page=1');
 
@@ -13,7 +13,7 @@ class WeatherApi {
     String jsonString = response.body;
 
     Map<String, dynamic> json = jsonDecode(jsonString);
-
-    return Movie.fromJson(json);
+    Iterable result = json['results'];
+    return result.map((e) => AboutMovie.fromJson(e)).toList();
   }
 }
