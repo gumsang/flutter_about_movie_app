@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../api_keys/api_keys.dart';
-import '../model/detail_movie.dart';
+import '../model/detail_movie_model.dart';
 
 class DetailApi {
   Future<DetailMovie> getMovieDetail(String query) async {

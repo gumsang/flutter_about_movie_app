@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_about_movie_app/detail_screen/model/detail_movie.dart';
+import 'package:flutter_about_movie_app/data/model/detail_movie_model.dart';
 
-import '../api/detail_api.dart';
-import '../../component/model.dart';
+import '../../data/datasource/detail_api.dart';
 
-class DetailViewModel extends ChangeNotifier {
+class MovieDetailViewModel extends ChangeNotifier {
   final _detailApi = DetailApi();
   DetailMovie movie = DetailMovie();
 

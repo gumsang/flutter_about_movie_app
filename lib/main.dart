@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_about_movie_app/search_screen/view_model/search_movie_view_model.dart';
+import 'package:flutter_about_movie_app/ui/movie_search/movie_search_view_model.dart';
 import 'package:provider/provider.dart';
-import 'detail_screen/view_model/detail_view_model.dart';
-import 'main_screen/screens/main_screen.dart';
-import 'main_screen/view_model/movie_view_model.dart';
+import 'ui/movie_detail/movie_detail_view_model.dart';
+import 'ui/movie/movie_screen.dart';
+import 'ui/movie/movie_view_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,10 +20,10 @@ class MyApp extends StatelessWidget {
           create: (_) => MovieViewModel(),
         ),
         ChangeNotifierProvider(
-          create: (_) => DetailViewModel(),
+          create: (_) => MovieDetailViewModel(),
         ),
         ChangeNotifierProvider(
-          create: (_) => SearchViewModel(),
+          create: (_) => MovieSearchViewModel(),
         ),
       ],
       child: MaterialApp(
