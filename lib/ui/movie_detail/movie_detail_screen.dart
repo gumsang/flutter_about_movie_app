@@ -15,17 +15,20 @@ class MovieDetailScreen extends StatelessWidget {
       ),
       body: viewModel.movie.title == null
           ? const CircularProgressIndicator()
-          : Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
-                    viewModel.getPosterUrl(viewModel.movie),
-                    fit: BoxFit.cover,
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.network(
+                      viewModel.movie.posterPath!,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                Text(viewModel.movie.title!),
-              ],
+                  Text(viewModel.movie.title),
+                  Text(viewModel.movie.overview),
+                ],
+              ),
             ),
     );
   }

@@ -1,12 +1,16 @@
 import 'package:flutter_about_movie_app/data/model/about_movie_model.dart';
-import '../datasource/search_api.dart';
+import 'package:flutter_about_movie_app/data/repository/movie_repository.dart';
 
-class SearchMovieRepository {
-  final _searchApi = SearchApi();
+import '../datasource/movie_api.dart';
 
-  Future<List<AboutMovieModel>> getSearchResult(String query) async {
-    List<AboutMovieModel> movieList =
-        await _searchApi.getSearchMovieList(query);
+class MovieRepositoryImpl implements MovieRepository {
+  final MovieApi _api;
+
+  MovieRepositoryImpl(this._api);
+
+  @override
+  Future<List<AboutMovieModel>> getSearchResult() async {
+    List<AboutMovieModel> movieList = await _api.getMovieList();
     return movieList.where((element) => element.posterPath != null).map(
       (e) {
         final AboutMovieModel temp;

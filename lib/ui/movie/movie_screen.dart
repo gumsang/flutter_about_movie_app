@@ -26,8 +26,6 @@ class _MovieScreenState extends State<MovieScreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<MovieViewModel>();
-    final searchviewModel = context.watch<MovieSearchViewModel>();
-    final detailViewModel = context.watch<MovieDetailViewModel>();
     return Scaffold(
       appBar: AppBar(
         actions: !_searchBoolean
@@ -60,11 +58,14 @@ class _MovieScreenState extends State<MovieScreen> {
                   suffixIcon: GestureDetector(
                     onTap: () {
                       if (_controller.text.isNotEmpty) {
-                        searchviewModel.getSearchResult(_controller.text);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const MovieSearchScreen(),
+                              builder: (context) => ChangeNotifierProvider(
+                                create: (_) =>
+                                    MovieSearchViewModel(_controller.text),
+                                child: const MovieSearchScreen(),
+                              ),
                             ));
                         _controller.clear();
                       } else {}
@@ -107,12 +108,14 @@ class _MovieScreenState extends State<MovieScreen> {
                     itemBuilder: (BuildContext ctx, index) {
                       return GestureDetector(
                         onTap: () {
-                          detailViewModel.getDetail(
-                              viewModel.movieList[index].id.toString());
+                          final movie = viewModel.movieList[index];
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const MovieDetailScreen(),
+                                builder: (context) => ChangeNotifierProvider(
+                                  create: (_) => MovieDetailViewModel(movie),
+                                  child: const MovieDetailScreen(),
+                                ),
                               ));
                         },
                         child: Column(

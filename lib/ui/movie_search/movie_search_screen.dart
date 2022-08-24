@@ -23,8 +23,7 @@ class _MovieSearchScreenState extends State<MovieSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final searchviewModel = context.watch<MovieSearchViewModel>();
-    final detailViewModel = context.watch<MovieDetailViewModel>();
+    final viewModel = context.watch<MovieSearchViewModel>();
     return Scaffold(
       appBar: AppBar(
         actions: !_searchBoolean
@@ -57,7 +56,7 @@ class _MovieSearchScreenState extends State<MovieSearchScreen> {
                   suffixIcon: GestureDetector(
                     onTap: () {
                       if (_controller.text.isNotEmpty) {
-                        searchviewModel.getSearchResult(_controller.text);
+                        viewModel.getSearchResult(_controller.text);
                         _controller.clear();
                       }
                     },
@@ -83,7 +82,7 @@ class _MovieSearchScreenState extends State<MovieSearchScreen> {
                 ),
               ),
       ),
-      body: searchviewModel.movieList.isEmpty
+      body: viewModel.movieList.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
@@ -95,16 +94,18 @@ class _MovieSearchScreenState extends State<MovieSearchScreen> {
                             childAspectRatio: 2 / 3.7,
                             crossAxisSpacing: 20,
                             mainAxisSpacing: 20),
-                    itemCount: searchviewModel.movieList.length,
+                    itemCount: viewModel.movieList.length,
                     itemBuilder: (BuildContext ctx, index) {
                       return GestureDetector(
                         onTap: () {
-                          detailViewModel.getDetail(
-                              searchviewModel.movieList[index].id.toString());
+                          final movie = viewModel.movieList[index];
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const MovieDetailScreen(),
+                                builder: (context) => ChangeNotifierProvider(
+                                  create: (_) => MovieDetailViewModel(movie),
+                                  child: const MovieDetailScreen(),
+                                ),
                               ));
                         },
                         child: Column(
@@ -112,11 +113,11 @@ class _MovieSearchScreenState extends State<MovieSearchScreen> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image.network(
-                                searchviewModel.movieList[index].posterPath!,
+                                viewModel.movieList[index].posterPath!,
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            Text(searchviewModel.movieList[index].title!),
+                            Text(viewModel.movieList[index].title),
                           ],
                         ),
                       );

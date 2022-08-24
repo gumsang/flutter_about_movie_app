@@ -19,12 +19,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => MovieViewModel(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => MovieDetailViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => MovieSearchViewModel(),
-        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
