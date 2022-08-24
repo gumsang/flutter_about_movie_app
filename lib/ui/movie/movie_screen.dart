@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_about_movie_app/ui/movie_search/movie_search_screen.dart';
 import 'package:provider/provider.dart';
 import '../movie_detail/movie_detail_screen.dart';
-import '../movie_detail/movie_detail_view_model.dart';
-import '../movie_search/movie_search_view_model.dart';
 import 'movie_view_model.dart';
 
 class MovieScreen extends StatefulWidget {
@@ -58,17 +55,9 @@ class _MovieScreenState extends State<MovieScreen> {
                   suffixIcon: GestureDetector(
                     onTap: () {
                       if (_controller.text.isNotEmpty) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ChangeNotifierProvider(
-                                create: (_) =>
-                                    MovieSearchViewModel(_controller.text),
-                                child: const MovieSearchScreen(),
-                              ),
-                            ));
+                        viewModel.getSearchList(_controller.text);
                         _controller.clear();
-                      } else {}
+                      }
                     },
                     child: const Icon(
                       Icons.search,
@@ -101,7 +90,7 @@ class _MovieScreenState extends State<MovieScreen> {
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 200,
-                            childAspectRatio: 2 / 3.3,
+                            childAspectRatio: 2 / 3.6,
                             crossAxisSpacing: 20,
                             mainAxisSpacing: 20),
                     itemCount: viewModel.movieList.length,
@@ -110,13 +99,11 @@ class _MovieScreenState extends State<MovieScreen> {
                         onTap: () {
                           final movie = viewModel.movieList[index];
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ChangeNotifierProvider(
-                                  create: (_) => MovieDetailViewModel(movie),
-                                  child: const MovieDetailScreen(),
-                                ),
-                              ));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MovieDetailScreen(movie),
+                            ),
+                          );
                         },
                         child: Column(
                           children: [

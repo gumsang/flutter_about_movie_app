@@ -21,4 +21,18 @@ class MovieApiImpl implements MovieApi {
     Iterable result = json['results'];
     return result.map((e) => AboutMovieModel.fromJson(e)).toList();
   }
+
+  @override
+  Future<List<AboutMovieModel>> getSearchMovieList(String query) async {
+    Uri url = Uri.parse(
+        'https://api.themoviedb.org/3/search/movie?language=ko-KR&api_key=$ssam_api_keys&query=$query');
+
+    http.Response response = await _client.get(url);
+    String jsonString = response.body;
+
+    Map<String, dynamic> json = jsonDecode(jsonString);
+
+    Iterable result = json['results'];
+    return result.map((e) => AboutMovieModel.fromJson(e)).toList();
+  }
 }

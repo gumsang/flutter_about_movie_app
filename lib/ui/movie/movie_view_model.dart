@@ -14,7 +14,12 @@ class MovieViewModel extends ChangeNotifier {
   }
 
   Future getList() async {
-    movieList = await _movieRepository.getSearchResult();
+    movieList = await _movieRepository.getResult();
+    notifyListeners();
+  }
+
+  Future getSearchList(String query) async {
+    movieList = await _movieRepository.getSearchResult(query);
     notifyListeners();
   }
 }
