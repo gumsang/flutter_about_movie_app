@@ -92,7 +92,7 @@ class _MovieSearchScreenState extends State<MovieSearchScreen> {
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 200,
-                            childAspectRatio: 2 / 4,
+                            childAspectRatio: 2 / 3.7,
                             crossAxisSpacing: 20,
                             mainAxisSpacing: 20),
                     itemCount: searchviewModel.movieList.length,

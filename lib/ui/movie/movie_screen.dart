@@ -3,19 +3,17 @@ import 'package:flutter_about_movie_app/ui/movie_search/movie_search_screen.dart
 import 'package:provider/provider.dart';
 import '../movie_detail/movie_detail_screen.dart';
 import '../movie_detail/movie_detail_view_model.dart';
-import '../movie_detail/movie_detail_view_model.dart';
-import 'movie_view_model.dart';
 import '../movie_search/movie_search_view_model.dart';
 import 'movie_view_model.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+class MovieScreen extends StatefulWidget {
+  const MovieScreen({Key? key}) : super(key: key);
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<MovieScreen> createState() => _MovieScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MovieScreenState extends State<MovieScreen> {
   bool _searchBoolean = false;
   final _controller = TextEditingController();
 
@@ -122,12 +120,11 @@ class _MainScreenState extends State<MainScreen> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image.network(
-                                viewModel
-                                    .getPosterUrl(viewModel.movieList[index]),
+                                viewModel.movieList[index].posterPath!,
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            Text(viewModel.movieList[index].title as String),
+                            Text(viewModel.movieList[index].title),
                           ],
                         ),
                       );
