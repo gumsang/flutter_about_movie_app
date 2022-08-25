@@ -113,11 +113,14 @@ class _MovieScreenState extends State<MovieScreen> {
                         },
                         child: Column(
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.network(
-                                viewModel.movieList[index].posterPath!,
-                                fit: BoxFit.cover,
+                            Hero(
+                              tag: viewModel.movieList[index].id,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.network(
+                                  viewModel.movieList[index].posterPath!,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                             Text(viewModel.movieList[index].title),

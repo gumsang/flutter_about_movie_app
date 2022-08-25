@@ -14,11 +14,14 @@ class MovieDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                movie.posterPath!,
-                fit: BoxFit.cover,
+            Hero(
+              tag: movie.id,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                  movie.posterPath!,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Text(movie.title),
