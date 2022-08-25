@@ -28,12 +28,18 @@ class _MovieScreenState extends State<MovieScreen> {
         actions: !_searchBoolean
             ? [
                 IconButton(
+                  icon: const Icon(Icons.home),
+                  onPressed: () {
+                    viewModel.getList();
+                  },
+                ),
+                IconButton(
                     icon: const Icon(Icons.search),
                     onPressed: () {
                       setState(() {
                         _searchBoolean = true;
                       });
-                    })
+                    }),
               ]
             : [
                 IconButton(
