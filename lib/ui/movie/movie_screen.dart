@@ -69,10 +69,6 @@ class _MovieScreenState extends State<MovieScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var orientation = MediaQuery.of(context).orientation;
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
-    final double itemWidth = size.width / 2;
     final viewModel = context.watch<MovieViewModel>();
     return Scaffold(
       appBar: AppBar(
