@@ -17,6 +17,51 @@ class _MovieScreenState extends State<MovieScreen> {
   final _controller = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      final viewModel = context.read<MovieViewModel>();
+      viewModel.onAction(const MainAction.getList());
+      viewModel.eventStream.listen((event) {
+        event.when(
+          showSnackBar: (message) {
+            final snackBar = SnackBar(
+              content: Text(message),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          },
+          showDialog: (message) {
+            showDialog<void>(
+              context: context,
+              barrierDismissible: false, // user must tap button!
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('AlertDialog Title'),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: <Widget>[
+                        Text(message),
+                      ],
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text('Approve'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        );
+      });
+    });
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -25,7 +70,6 @@ class _MovieScreenState extends State<MovieScreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<MovieViewModel>();
-    viewModel.onAction(const MainAction.getList());
     return Scaffold(
       appBar: AppBar(
         actions: !_searchBoolean
@@ -63,12 +107,9 @@ class _MovieScreenState extends State<MovieScreen> {
                 decoration: InputDecoration(
                   suffixIcon: GestureDetector(
                     onTap: () {
-                      if (_controller.text.isNotEmpty) {
-                        // viewModel.getSearchList(_controller.text);
-                        viewModel
-                            .onAction(MainAction.getSearch(_controller.text));
-                        _controller.clear();
-                      }
+                      viewModel
+                          .onAction(MainAction.getSearch(_controller.text));
+                      _controller.clear();
                     },
                     child: const Icon(
                       Icons.search,

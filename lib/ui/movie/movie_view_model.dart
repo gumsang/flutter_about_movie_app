@@ -14,6 +14,7 @@ class MovieViewModel extends ChangeNotifier {
 
   MainState get state => _state;
   final _eventController = StreamController<MainUiEvent>();
+  Stream<MainUiEvent> get eventStream => _eventController.stream;
 
   MovieViewModel(this._movieRepository);
 
@@ -37,6 +38,7 @@ class MovieViewModel extends ChangeNotifier {
 
   Future _getList() async {
     _state = state.copyWith(isLoading: true);
+    notifyListeners();
     final result = await _movieRepository.getResult();
     result.when(
       success: (movies) {
@@ -60,6 +62,8 @@ class MovieViewModel extends ChangeNotifier {
 
   Future _getSearchList(String query) async {
     _state = state.copyWith(isLoading: true);
+    notifyListeners();
+
     final result = await _movieRepository.getSearchResult(query);
     result.when(
       success: (movies) {
