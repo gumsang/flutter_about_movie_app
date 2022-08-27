@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_about_movie_app/ui/main_action.dart';
 import 'package:provider/provider.dart';
+
 import '../movie_detail/movie_detail_screen.dart';
 import 'movie_view_model.dart';
 
@@ -23,6 +25,7 @@ class _MovieScreenState extends State<MovieScreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<MovieViewModel>();
+    viewModel.onAction(const MainAction.getList());
     return Scaffold(
       appBar: AppBar(
         actions: !_searchBoolean
@@ -30,7 +33,7 @@ class _MovieScreenState extends State<MovieScreen> {
                 IconButton(
                   icon: const Icon(Icons.home),
                   onPressed: () {
-                    viewModel.getList();
+                    viewModel.onAction(const MainAction.getList());
                   },
                 ),
                 IconButton(
@@ -61,7 +64,9 @@ class _MovieScreenState extends State<MovieScreen> {
                   suffixIcon: GestureDetector(
                     onTap: () {
                       if (_controller.text.isNotEmpty) {
-                        viewModel.getSearchList(_controller.text);
+                        // viewModel.getSearchList(_controller.text);
+                        viewModel
+                            .onAction(MainAction.getSearch(_controller.text));
                         _controller.clear();
                       }
                     },
@@ -87,8 +92,8 @@ class _MovieScreenState extends State<MovieScreen> {
                 ),
               ),
       ),
-      body: viewModel.movieList.isEmpty
-          ? const CircularProgressIndicator()
+      body: viewModel.state.movies.isEmpty
+          ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
                 Expanded(
@@ -99,11 +104,11 @@ class _MovieScreenState extends State<MovieScreen> {
                             childAspectRatio: 2 / 3.6,
                             crossAxisSpacing: 20,
                             mainAxisSpacing: 20),
-                    itemCount: viewModel.movieList.length,
+                    itemCount: viewModel.state.movies.length,
                     itemBuilder: (BuildContext ctx, index) {
                       return GestureDetector(
                         onTap: () {
-                          final movie = viewModel.movieList[index];
+                          final movie = viewModel.state.movies[index];
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -114,16 +119,16 @@ class _MovieScreenState extends State<MovieScreen> {
                         child: Column(
                           children: [
                             Hero(
-                              tag: viewModel.movieList[index].id,
+                              tag: viewModel.state.movies[index].id,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: Image.network(
-                                  viewModel.movieList[index].posterPath!,
+                                  viewModel.state.movies[index].posterPath!,
                                   fit: BoxFit.cover,
                                 ),
                               ),
                             ),
-                            Text(viewModel.movieList[index].title),
+                            Text(viewModel.state.movies[index].title),
                           ],
                         ),
                       );

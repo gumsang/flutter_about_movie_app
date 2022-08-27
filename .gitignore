@@ -47,3 +47,7 @@ app.*.map.json
 /android/app/release
 
 api_keys.dart
+
+# "JSON to Dart Model" generator tracker files locations.
+/.json_models/
+models.jsonc
