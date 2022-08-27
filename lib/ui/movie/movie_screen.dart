@@ -69,6 +69,10 @@ class _MovieScreenState extends State<MovieScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var orientation = MediaQuery.of(context).orientation;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
+    final double itemWidth = size.width / 2;
     final viewModel = context.watch<MovieViewModel>();
     return Scaffold(
       appBar: AppBar(
@@ -138,42 +142,49 @@ class _MovieScreenState extends State<MovieScreen> {
           : Column(
               children: [
                 Expanded(
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            childAspectRatio: 2 / 3.6,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20),
-                    itemCount: viewModel.state.movies.length,
-                    itemBuilder: (BuildContext ctx, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          final movie = viewModel.state.movies[index];
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MovieDetailScreen(movie),
-                            ),
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Hero(
-                              tag: viewModel.state.movies[index].id,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.network(
-                                  viewModel.state.movies[index].posterPath!,
-                                  fit: BoxFit.cover,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 150,
+                              childAspectRatio: 2 / 3.6,
+                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 20),
+                      itemCount: viewModel.state.movies.length,
+                      itemBuilder: (BuildContext ctx, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            final movie = viewModel.state.movies[index];
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MovieDetailScreen(movie),
+                              ),
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              Hero(
+                                tag: viewModel.state.movies[index].id,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(
+                                    viewModel.state.movies[index].posterPath!,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Text(viewModel.state.movies[index].title),
-                          ],
-                        ),
-                      );
-                    },
+                              Text(
+                                viewModel.state.movies[index].title,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],
