@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_about_movie_app/data/datasource/movie_api_impl.dart';
 import 'package:provider/provider.dart';
+
+import 'data/repository/movie_repository_impl.dart';
 import 'ui/movie/movie_screen.dart';
 import 'ui/movie/movie_view_model.dart';
 
@@ -15,7 +18,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => MovieViewModel(),
+          create: (_) {
+            return MovieViewModel(MovieRepositoryImpl(MovieApiImpl()));
+          },
         ),
       ],
       child: MaterialApp(
