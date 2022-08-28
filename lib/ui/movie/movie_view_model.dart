@@ -31,6 +31,7 @@ class MovieViewModel extends ChangeNotifier {
         _getSearchList(query);
       },
       home: () {
+        _eventController.add(const MainUiEvent.showSnackBar('홈화면으로 이동합니다'));
         _getList();
       },
     );

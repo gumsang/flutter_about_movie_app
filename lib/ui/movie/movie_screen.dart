@@ -77,7 +77,7 @@ class _MovieScreenState extends State<MovieScreen> {
                 IconButton(
                   icon: const Icon(Icons.home),
                   onPressed: () {
-                    viewModel.onAction(const MainAction.getList());
+                    viewModel.onAction(const MainAction.home());
                   },
                 ),
                 IconButton(
