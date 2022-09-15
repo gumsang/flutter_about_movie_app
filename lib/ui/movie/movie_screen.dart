@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_about_movie_app/ui/components/scale_animation.dart';
 import 'package:flutter_about_movie_app/ui/main_action.dart';
 import 'package:provider/provider.dart';
 
@@ -154,29 +155,37 @@ class _MovieScreenState extends State<MovieScreen> {
                             final movie = viewModel.state.movies[index];
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                builder: (context) => MovieDetailScreen(movie),
+                              PageRouteBuilder(
+                                transitionDuration:
+                                    const Duration(milliseconds: 1),
+                                pageBuilder: (_, __, ___) =>
+                                    MovieDetailScreen(movie),
                               ),
                             );
                           },
-                          child: Column(
-                            children: [
-                              Hero(
-                                tag: viewModel.state.movies[index].id,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Image.network(
-                                    viewModel.state.movies[index].posterPath!,
-                                    fit: BoxFit.cover,
+                          child: ScaleAnimation(
+                            child: Column(
+                              children: [
+                                ScaleAnimation(
+                                  child: Hero(
+                                    tag: viewModel.state.movies[index].id,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.network(
+                                        viewModel
+                                            .state.movies[index].posterPath!,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Text(
-                                viewModel.state.movies[index].title,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
+                                Text(
+                                  viewModel.state.movies[index].title,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
