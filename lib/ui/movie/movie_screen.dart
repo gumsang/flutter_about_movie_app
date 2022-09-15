@@ -151,6 +151,7 @@ class _MovieScreenState extends State<MovieScreen> {
                       itemCount: viewModel.state.movies.length,
                       itemBuilder: (BuildContext ctx, index) {
                         return GestureDetector(
+                          key: ValueKey(viewModel.state.movies[index]),
                           onTap: () {
                             final movie = viewModel.state.movies[index];
                             Navigator.push(
