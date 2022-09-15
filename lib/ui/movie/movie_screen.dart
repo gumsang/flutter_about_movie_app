@@ -167,16 +167,13 @@ class _MovieScreenState extends State<MovieScreen> {
                           child: ScaleAnimation(
                             child: Column(
                               children: [
-                                ScaleAnimation(
-                                  child: Hero(
-                                    tag: viewModel.state.movies[index].id,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Image.network(
-                                        viewModel
-                                            .state.movies[index].posterPath!,
-                                        fit: BoxFit.cover,
-                                      ),
+                                Hero(
+                                  tag: viewModel.state.movies[index].id,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.network(
+                                      viewModel.state.movies[index].posterPath!,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
