@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_about_movie_app/ui/components/on_hover_animation.dart';
 import 'package:flutter_about_movie_app/ui/components/scale_animation.dart';
 import 'package:flutter_about_movie_app/ui/main_action.dart';
 import 'package:provider/provider.dart';
@@ -169,11 +170,14 @@ class _MovieScreenState extends State<MovieScreen> {
                               children: [
                                 Hero(
                                   tag: viewModel.state.movies[index].id,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Image.network(
-                                      viewModel.state.movies[index].posterPath!,
-                                      fit: BoxFit.cover,
+                                  child: OnHoverAnimation(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.network(
+                                        viewModel
+                                            .state.movies[index].posterPath!,
+                                        // fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
