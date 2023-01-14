@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_about_movie_app/ui/components/on_hover_animation.dart';
 import 'package:flutter_about_movie_app/ui/components/scale_animation.dart';
 import 'package:flutter_about_movie_app/ui/main_action.dart';
 import 'package:provider/provider.dart';
 
+import '../components/on_hover_animation.dart';
 import '../movie_detail/movie_detail_screen.dart';
 import 'movie_view_model.dart';
 
